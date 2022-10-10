@@ -105,6 +105,11 @@ require (
 )
 
 require (
+	github.com/go-redis/redis/v7 v7.4.1 // indirect
+	github.com/open-telemetry/opentelemetry-collector-contrib/receiver/redisreceiver v0.66.0 // indirect
+)
+
+require (
 	cloud.google.com/go/compute v1.12.1 // indirect
 	cloud.google.com/go/compute/metadata v0.2.1 // indirect
 	code.cloudfoundry.org/go-diodes v0.0.0-20211115184647-b584dd5df32c // indirect
