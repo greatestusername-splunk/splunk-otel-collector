@@ -1,4 +1,0 @@
-ansible==3.4.0
-molecule==3.3.0
-molecule-vagrant==0.6.1
-python-vagrant==0.5.15
