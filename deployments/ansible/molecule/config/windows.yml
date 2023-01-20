@@ -1,0 +1,46 @@
+---
+dependency:
+  name: galaxy
+  options:
+    requirements-file: ./molecule/requirements.yml
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+platforms:
+  - name: instance
+    box: gusztavvargadr/windows-server-${MOLECULE_DISTRO:-2019}-standard
+    provider_options:
+      linked_clone: true
+    config_options:
+      ssh.keep_alive: yes
+      ssh.remote_user: vagrant
+    instance_raw_config_args:
+      - "vm.boot_timeout = 900"
+      - "winrm.retry_limit = 50"
+      - "winrm.retry_delay = 10"
+    cpus: 2
+    memory: 4096
+provisioner:
+  name: ansible
+  env:
+    OBJC_DISABLE_INITIALIZE_FORK_SAFETY: 'YES'
+  connection_options:
+    ansible_connection: winrm
+    ansible_host: 127.0.0.1
+    ansible_port: 55985
+    ansible_become_method: runas
+    ansible_become_user: vagrant
+    ansible_password: vagrant
+    ansible_user: vagrant
+    ansible_winrm_scheme: http
+    ansible_winrm_transport: basic
+    ansible_winrm_server_cert_validation: ignore
+    ansible_winrm_operation_timeout_sec: 60
+    ansible_winrm_read_timeout_sec: 90
+  playbooks:
+    converge: windows-converge.yml
+    prepare: windows-prepare.yml
+    verify: windows-verify.yml
+  options:
+    vvv: true
